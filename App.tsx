@@ -1,118 +1,137 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from "react";
+import { Button, View, Text, StyleSheet, Touchable, TouchableOpacity } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import BlindPreview from "./blindstruc/BlindPreview";
+import LinearGradient from "react-native-linear-gradient";
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+function HomeScreen({ navigation }) {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Home Screen</Text>
+      <Button
+        title="Go to Preview Blinds Structure"
+        onPress={() => navigation.navigate("Preview Blind Structure")}
+      />
     </View>
   );
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const Stack = createStackNavigator();
+
+const App = () => {
+  const blind_data = [
+    {
+      "Level": "1",
+      "Time": "03:00",
+      "Blinds": "1/2"
+    },
+    {
+      "Level": "2",
+      "Time": "06:00",
+      "Blinds": "2/4"
+    },
+    {
+      "Level": "3",
+      "Time": "09:00",
+      "Blinds": "4/8"
+    },
+    {
+      "Level": "4",
+      "Time": "12:00",
+      "Blinds": "8/16"
+    },
+    {
+      "Level": "5",
+      "Time": "15:00",
+      "Blinds": "16/32"
+    },
+    {
+      "Level": "6",
+      "Time": "18:00",
+      "Blinds": "32/64"
+    },
+    {
+      "Level": "7",
+      "Time": "21:00",
+      "Blinds": "54/168"
+    },
+    {
+      "Level": "8",
+      "Time": "24:00",
+      "Blinds": "128/256"
+    },
+    {
+      "Level": "9",
+      "Time": "27:00",
+      "Blinds": "256/512"
+    },
+    {
+      "Level": "10",
+      "Time": "30:00",
+      "Blinds": "512/1024"
+    },
+    {
+      "Level": "",
+      "Time": "+3:00",
+      "Blinds": "*2"
+    }
+  ];
+
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+
+      
+     <Stack.Screen 
+  name="Preview Blind Structure"
+ 
+  options={({ navigation }) => ({ // Destructure navigation from props
+    headerShown: true,
+    headerTitle: () => (
+      <Text style={styles.titleheader}>Preview Blind Structure</Text>
+    ),
+    headerLeft:() => (
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text style={styles.arrow}>◀︎</Text>
+      </TouchableOpacity>
+    ),
+    headerBackground: () => (
+      <LinearGradient
+        colors={["#E1BEF3", "#DA8CF8", "#7E3EF8", "#6A1FF9"]}
+        style={{ flex: 1 }}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    ),
+  })}
+>
+        {(props) => <BlindPreview {...props} jsonData={blind_data} />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  </NavigationContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  titleheader: {
+  fontWeight:"bold",
+  marginLeft:10,
+    fontSize: 25,
+    color:"#fff",
+    left: 15,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+arrow:{
+  fontSize:40,
+  justifyContent:"center",
+  top:-4,
+  left: 10 
+}
+
 });
 
 export default App;
