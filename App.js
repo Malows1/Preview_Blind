@@ -1,10 +1,9 @@
 import React from "react";
-import { Button, View, Text, StyleSheet, Touchable, TouchableOpacity } from "react-native";
+import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import BlindPreview from "./blindstruc/BlindPreview";
 import LinearGradient from "react-native-linear-gradient";
-
 
 function HomeScreen({ navigation }) {
   return (
@@ -17,7 +16,6 @@ function HomeScreen({ navigation }) {
     </View>
   );
 }
-
 
 const Stack = createStackNavigator();
 
@@ -80,58 +78,53 @@ const App = () => {
     }
   ];
 
-
   return (
     <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-
-      
-     <Stack.Screen 
-  name="Preview Blind Structure"
- 
-  options={({ navigation }) => ({ // Destructure navigation from props
-    headerShown: true,
-    headerTitle: () => (
-      <Text style={styles.titleheader}>Preview Blind Structure</Text>
-    ),
-    headerLeft:() => (
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={styles.arrow}>◀︎</Text>
-      </TouchableOpacity>
-    ),
-    headerBackground: () => (
-      <LinearGradient
-        colors={["#E1BEF3", "#DA8CF8", "#7E3EF8", "#6A1FF9"]}
-        style={{ flex: 1 }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      />
-    ),
-  })}
->
-        {(props) => <BlindPreview {...props} jsonData={blind_data} />}
-      </Stack.Screen>
-    </Stack.Navigator>
-  </NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen 
+          name="Preview Blind Structure"
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTitle: () => (
+              <Text style={styles.titleheader}>Preview Blind Structure</Text>
+            ),
+            headerLeft:() => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={styles.arrow}>◀︎</Text>
+              </TouchableOpacity>
+            ),
+            headerBackground: () => (
+              <LinearGradient
+                colors={["#E1BEF3", "#DA8CF8", "#7E3EF8", "#6A1FF9"]}
+                style={{ flex: 1 }}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              />
+            ),
+          })}
+        >
+          {(props) => <BlindPreview {...props} jsonData={blind_data} />}
+        </Stack.Screen>
+      </Stack.Navigator>  
+    </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
   titleheader: {
-  fontWeight:"bold",
-  marginLeft:10,
+    fontWeight:"bold",
+    marginLeft:10,
     fontSize: 25,
     color:"#fff",
     left: 15,
   },
-arrow:{
-  fontSize:40,
-  justifyContent:"center",
-  top:-4,
-  left: 10 
-}
-
+  arrow: {
+    fontSize: 40,
+    justifyContent: "center",
+    top: -4,
+    left: 10 
+  }
 });
 
 export default App;

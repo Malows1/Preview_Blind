@@ -10,34 +10,23 @@ import {
   StyleSheet,
 } from 'react-native';
 
-
-
-  
-interface AppProps {
-    jsonData: { Level: string; Time: string; Blinds: string }[];
-  }
-
-  const BlindPreview: React.FC<AppProps> = ({ jsonData }) => {
-    const tableData = jsonData.map((item) => [item.Level, item.Time, item.Blinds]);
-  
-
+const BlindPreview = ({ jsonData }) => {
+  const tableData = jsonData.map((item) => [item.Level, item.Time, item.Blinds]);
 
   return (
-    
     <SafeAreaView style={styles.bodybg}>
-  
-  {/* Header row */}
+      {/* Header row */}
       <View style={styles.tableRow}>
-                    <Text style={[styles.tableCell, styles.headerCell,styles.levelHeader]}>Level</Text>
-                    <Text style={[styles.tableCell, styles.headerCell]}>Time</Text>
-                    <Text style={[styles.tableCell, styles.headerCell]}>Blinds</Text>
-                </View>
+        <Text style={[styles.tableCell, styles.headerCell, styles.levelHeader]}>Level</Text>
+        <Text style={[styles.tableCell, styles.headerCell]}>Time</Text>
+        <Text style={[styles.tableCell, styles.headerCell]}>Blinds</Text>
+      </View>
       {/* DATA ROW table*/}
       <View style={styles.table}>
         {tableData.map((row, index) => (
           <View style={styles.tableRow} key={index}>
             {row.map((cell, cellIndex) => (
-             <Text style={[styles.tableCell, cellIndex === 0 ? styles.levelCell : null]} key={cellIndex}>
+              <Text style={[styles.tableCell, cellIndex === 0 ? styles.levelCell : null]} key={cellIndex}>
                 {cell}
               </Text>
             ))}
@@ -45,7 +34,6 @@ interface AppProps {
         ))}
       </View>
     </SafeAreaView>
-    
   );
 }
 
@@ -83,22 +71,20 @@ const styles = StyleSheet.create({
   tableCell: {
     color: 'black',
     flex: 1,
-    borderBottomWidth:1,
+    borderBottomWidth: 1,
     borderColor: '#ccc',
     padding: 9,
-   
   },
   headerCell: {
-   
     fontWeight: 'bold',
     backgroundColor: '#f0f0f0', 
-},
-levelHeader: {
+  },
+  levelHeader: {
     color: '#5CE3FE', // Change color of the Level header
-},
-levelCell: {
+  },
+  levelCell: {
     color: '#5CE3FE', // Change color of the Level column
-},
+  },
 });
 
 export default BlindPreview;
