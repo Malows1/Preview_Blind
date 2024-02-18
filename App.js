@@ -5,6 +5,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import BlindPreview from "./blindstruc/BlindPreview";
 import LinearGradient from "react-native-linear-gradient";
 
+// Importing the BlindsGenerator module
+import { generateBlindsStructure, formatTime, incrementBlind } from "./blindstruc/BlindGenerator";
+
 function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -20,63 +23,10 @@ function HomeScreen({ navigation }) {
 const Stack = createStackNavigator();
 
 const App = () => {
-  const blind_data = [
-    {
-      "Level": "1",
-      "Time": "03:00",
-      "Blinds": "1/2"
-    },
-    {
-      "Level": "2",
-      "Time": "06:00",
-      "Blinds": "2/4"
-    },
-    {
-      "Level": "3",
-      "Time": "09:00",
-      "Blinds": "4/8"
-    },
-    {
-      "Level": "4",
-      "Time": "12:00",
-      "Blinds": "8/16"
-    },
-    {
-      "Level": "5",
-      "Time": "15:00",
-      "Blinds": "16/32"
-    },
-    {
-      "Level": "6",
-      "Time": "18:00",
-      "Blinds": "32/64"
-    },
-    {
-      "Level": "7",
-      "Time": "21:00",
-      "Blinds": "54/168"
-    },
-    {
-      "Level": "8",
-      "Time": "24:00",
-      "Blinds": "128/256"
-    },
-    {
-      "Level": "9",
-      "Time": "27:00",
-      "Blinds": "256/512"
-    },
-    {
-      "Level": "10",
-      "Time": "30:00",
-      "Blinds": "512/1024"
-    },
-    {
-      "Level": "",
-      "Time": "+3:00",
-      "Blinds": "*2"
-    }
-  ];
+  // Generating blinds structure using the functions from BlindsGenerator
+  const gameTime = 1800; // 30 minutes in seconds
+  const raiseBlindTime = 180; // 3 minutes in seconds
+  const blindsStructure = generateBlindsStructure(gameTime, raiseBlindTime);
 
   return (
     <NavigationContainer>
@@ -104,7 +54,7 @@ const App = () => {
             ),
           })}
         >
-          {(props) => <BlindPreview {...props} jsonData={blind_data} />}
+          {(props) => <BlindPreview {...props} jsonData={blindsStructure} />}
         </Stack.Screen>
       </Stack.Navigator>  
     </NavigationContainer>
@@ -114,7 +64,7 @@ const App = () => {
 const styles = StyleSheet.create({
   titleheader: {
     fontWeight:"bold",
-    marginLeft:10,
+    marginLeft:12,
     fontSize: 25,
     color:"#fff",
     left: 15,

@@ -1,8 +1,6 @@
 import React from "react";
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LinearGradient from 'react-native-linear-gradient';
+
 import {
   View,
   Text,
@@ -11,7 +9,7 @@ import {
 } from 'react-native';
 
 const BlindPreview = ({ jsonData }) => {
-  const tableData = jsonData.map((item) => [item.Level, item.Time, item.Blinds]);
+
 
   return (
     <SafeAreaView style={styles.bodybg}>
@@ -23,7 +21,7 @@ const BlindPreview = ({ jsonData }) => {
       </View>
       {/* DATA ROW table*/}
       <View style={styles.table}>
-        {tableData.map((row, index) => (
+        {jsonData.map((row, index) => (
           <View style={styles.tableRow} key={index}>
             {row.map((cell, cellIndex) => (
               <Text style={[styles.tableCell, cellIndex === 0 ? styles.levelCell : null]} key={cellIndex}>
